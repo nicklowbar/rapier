@@ -1,3 +1,5 @@
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 use crate::alloc_prelude::*;
 use crate::geometry::{ColliderHandle, ContactManifold, Shape, ShapeCastHit};
 use crate::math::{Pose, Real, Vector};
@@ -1045,7 +1047,7 @@ mod test {
         let collider = ColliderBuilder::cuboid(slope_size * 2.0, ground_height, ground_size)
             .translation(Vector::new(
                 0.1 + slope_size * 2.0 + impossible_slope_size - 0.9 + slope_size,
-                -ground_height + 1.7 + slope_size * impossible_slope_angle.sin(),
+                -ground_height + 1.7 + slope_size * impossible_slope_angle.d_sin(),
                 0.0,
             ))
             .rotation(Vector::Z * impossible_slope_angle);

@@ -1,3 +1,5 @@
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 #[cfg(not(feature = "std"))]
 use simba::scalar::ComplexField;
 
@@ -763,10 +765,10 @@ impl JointConstraintHelper<Real> {
         let mut rhs_wo_bias = 0.0;
         if motor_params.erp_inv_dt != 0.0 {
             #[cfg(feature = "dim2")]
-            let s_ang_dist = (self.ang_err.angle() / 2.0).sin();
+            let s_ang_dist = (self.ang_err.angle() / 2.0).d_sin();
             #[cfg(feature = "dim3")]
             let s_ang_dist = self.ang_err.xyz()[_motor_axis];
-            let s_target_ang = (motor_params.target_pos / 2.0).sin();
+            let s_target_ang = (motor_params.target_pos / 2.0).d_sin();
             rhs_wo_bias += utils::smallest_abs_diff_between_sin_angles(s_ang_dist, s_target_ang)
                 * motor_params.erp_inv_dt;
         }

@@ -342,3 +342,5 @@ pub mod prelude {
     #[cfg(not(target_arch = "spirv"))]
     pub extern crate nalgebra;
 }
+
+mod detmath;

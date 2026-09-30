@@ -97,6 +97,7 @@ required-features = ["dim3", "f64"]
 doctest = false # All doctests are written assuming the 3D f32 version.
 
 [dependencies]
+libm = "0.2"
 glamx.workspace = true
 parry3d-f64.workspace = true
 simba.workspace = true

@@ -102,6 +102,7 @@ path = "../../src/lib.rs"
 required-features = ["dim3", "f32"]
 
 [dependencies]
+libm = "0.2"
 glamx.workspace = true
 parry3d.workspace = true
 simba = { workspace = true, features = ["wide"] }

@@ -1,4 +1,6 @@
 //! The `SoftBodyMaterial`: per-family stiffness, damping, plasticity and tearing parameters.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 use crate::dynamics::SpringCoefficients;
 use crate::dynamics::soft_body::SoftEdgePlasticFlow;
 use crate::math::Real;
@@ -195,7 +197,7 @@ impl SoftBodyMaterial {
         if self.tear_smoothing <= 0.0 {
             load
         } else {
-            let blend = 1.0 - (-dt / self.tear_smoothing).exp();
+            let blend = 1.0 - (-dt / self.tear_smoothing).d_exp();
             stress + (load - stress) * blend
         }
     }

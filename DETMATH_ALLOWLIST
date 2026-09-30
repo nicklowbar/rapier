@@ -1,0 +1,5 @@
+# Direct math calls in src/ that stay native, each with the reason it is platform-independent.
+# Every other transcendental call goes through src/detmath.rs. Format:
+#   src/<path>: <exact trimmed line>  # <reason>
+src/dynamics/rigid_body_components.rs: let angular_delta = delta_rot.sin().abs() * max_extent;  # 2D only: Rot2 accessor returning a stored component
+src/geometry/contact_pair.rs: let (sin, cos) = (delta_rot.sin(), delta_rot.cos());  # 2D only: Rot2 accessors returning stored components

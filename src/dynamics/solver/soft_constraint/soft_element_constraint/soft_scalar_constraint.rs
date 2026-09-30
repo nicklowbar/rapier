@@ -1,4 +1,6 @@
 //! The scalar N-particle constraint: gradients of each element kind, its update, warm start and solve.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 use crate::dynamics::SoftBody;
 use crate::dynamics::solver::solver_body::SolverBodies;
@@ -85,7 +87,7 @@ pub(crate) fn dihedral_gradients(pos: &[Vector; 4], rest: Real, grad: &mut [Vect
     let n1 = n1_raw / l1;
     let n2 = n2_raw / l2;
     let d = n1.dot(n2).clamp(-1.0, 1.0);
-    let angle = d.acos();
+    let angle = d.d_acos();
     let sin = (1.0 - d * d).sqrt();
     if sin < 1.0e-6 {
         // Flat configuration: the angle is stationary, no useful gradient.

@@ -1,5 +1,7 @@
 //! Shape matching helpers: the rotation of the best-fit rigid transform of a particle cloud onto
 //! its rest shape (polar decomposition of the mass-weighted covariance matrix).
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 #[cfg(feature = "dim3")]
 use crate::math::Real;
@@ -20,7 +22,7 @@ pub(crate) fn extract_rotation(a: Matrix, warm: Rotation) -> Rotation {
         if sin == 0.0 && cos == 0.0 {
             warm
         } else {
-            Rotation::new(sin.atan2(cos))
+            Rotation::new(sin.d_atan2(cos))
         }
     }
     #[cfg(feature = "dim3")]

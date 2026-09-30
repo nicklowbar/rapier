@@ -1,4 +1,6 @@
 //! The volume patches of crossed closed surfaces (soft-soft and soft-rigid) and their binning into volume constraints.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 use crate::alloc_prelude::*;
 
@@ -511,7 +513,7 @@ pub(super) fn volume_bins(
                         continue;
                     }
                     let ct = cell_center(t);
-                    let d2: Real = (0..DIM - 1).map(|j| (ck[j] - ct[j]).powi(2)).sum();
+                    let d2: Real = (0..DIM - 1).map(|j| (ck[j] - ct[j]).d_powi(2)).sum();
                     if d2 < best.0 {
                         best = (d2, t);
                     }

@@ -4,6 +4,8 @@
 //! tests assert that a known-bad scenario steps (or mutates the joint set)
 //! without panicking; the behavior tests assert that the simulation result
 //! matches what the multibody solver is supposed to produce.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 #[cfg(feature = "dim3")]
 use crate::alloc_prelude::*;
@@ -423,7 +425,7 @@ fn issue_379_multibody_ball_joint_respects_angular_limits() {
     //  * if the limit is ignored, it keeps swinging down towards y = -1.0;
     //  * if the child somehow never swings, it stays at y = 0.
     // Bracketing `lowest` around the expected stop rejects both failure modes.
-    let max_drop = -LIMIT.sin();
+    let max_drop = -LIMIT.d_sin();
     assert!(
         lowest > max_drop - 0.15,
         "ball joint ignored its angular limit: child dropped to y = {lowest}, \

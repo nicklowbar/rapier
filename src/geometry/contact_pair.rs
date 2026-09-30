@@ -1,3 +1,5 @@
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 use super::CollisionEvent;
 use crate::alloc_prelude::*;
 use crate::dynamics::{RigidBodyHandle, RigidBodySet};

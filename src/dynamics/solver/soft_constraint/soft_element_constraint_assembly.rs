@@ -1,6 +1,8 @@
 //! Per-step assembly of the awake soft bodies' element constraints into the group-major,
 //! color-by-color layout the solver expects: per-color counts and prefix sums (serial), then each
 //! body fills its own slots of every color's range (per body, in parallel under `parallel`).
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 #[cfg(not(feature = "std"))]
 #[allow(unused_imports)]
@@ -204,7 +206,7 @@ impl SoftConstraintsSet {
                 let sb = unsafe { &*awake.ptr };
                 let material = &sb.material;
                 if material.deformation_damping > 0.0 {
-                    awake.damping_factor = 1.0 - (-material.deformation_damping * dt).exp();
+                    awake.damping_factor = 1.0 - (-material.deformation_damping * dt).d_exp();
                     damping = true;
                 }
                 if sb.volume_preservation && !sb.volume_pieces.is_empty() {
@@ -762,7 +764,7 @@ impl SoftConstraintsSet {
                     let two_pi = Real::simd_two_pi();
                     // Snap-back caps: a strain error moves the particles at about
                     // `erp * strain * cell size` per second.
-                    let cell_size = vol.powf(1.0 / DIM as Real).max(1.0e-6);
+                    let cell_size = vol.d_powf(1.0 / DIM as Real).max(1.0e-6);
                     let strain_cap = |erp: Real| {
                         if erp > 0.0 {
                             max_corrective_velocity / (erp * cell_size)

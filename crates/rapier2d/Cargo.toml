@@ -105,6 +105,7 @@ required-features = ["dim2", "f32"]
 doctest = false # All doctests are written assuming the 3D version.
 
 [dependencies]
+libm = "0.2"
 glamx.workspace = true
 parry2d.workspace = true
 simba = { workspace = true, features = ["wide"] }

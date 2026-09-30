@@ -1,3 +1,5 @@
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 #[cfg(doc)]
 use super::IntegrationParameters;
 use crate::alloc_prelude::*;

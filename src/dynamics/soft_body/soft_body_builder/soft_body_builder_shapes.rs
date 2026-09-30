@@ -1,4 +1,6 @@
 //! Shape constructors of the soft-body builder: meshes, ropes, cloths, cuboids, spheres, polygons, disks and grids.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 use crate::alloc_prelude::*;
 #[cfg(feature = "dim3")]
@@ -275,7 +277,7 @@ impl SoftBodyBuilder {
             let center = origin + axis * t;
             for k in 0..na {
                 let a = k as Real / na as Real * Real::simd_two_pi();
-                positions.push(center + (u * a.cos() + v * a.sin()) * radius);
+                positions.push(center + (u * a.d_cos() + v * a.d_sin()) * radius);
             }
         }
         let mut edges = Vec::new();
@@ -558,7 +560,7 @@ impl SoftBodyBuilder {
         let points = (0..n)
             .map(|i| {
                 let angle = i as Real / n as Real * Real::simd_two_pi();
-                center + Vector::new(angle.cos(), angle.sin()) * radius
+                center + Vector::new(angle.d_cos(), angle.d_sin()) * radius
             })
             .collect();
         Self::polygon(points)

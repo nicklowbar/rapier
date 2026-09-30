@@ -1,6 +1,8 @@
 //! Per-row construction helpers shared by the joint constraint builders:
 //! jacobian bases, lock/limit/motor row assembly, and the Gram-Schmidt
 //! orthogonalization of a joint's rows.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 use crate::dynamics::solver::MotorParameters;
 use crate::dynamics::solver::joint_constraint::JointSolverBody;
@@ -59,9 +61,9 @@ impl AngularLimitParams<Real> {
 
         let center = (min + max) * 0.5;
         #[cfg(feature = "dim2")]
-        let (sin, cos) = center.sin_cos();
+        let (sin, cos) = center.d_sin_cos();
         #[cfg(feature = "dim3")]
-        let (sin, cos) = (center * 0.5).sin_cos();
+        let (sin, cos) = (center * 0.5).d_sin_cos();
 
         Self {
             center: [cos, sin],

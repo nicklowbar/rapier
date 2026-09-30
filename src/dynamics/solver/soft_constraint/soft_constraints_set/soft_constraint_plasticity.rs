@@ -1,5 +1,7 @@
 //! Plastic flow of the elastic cells from the strain of the last solve, shared by the constraint
 //! writeback and the FEM writeback, and the total (elastic plus plastic) stretch a cell tears on.
+#[allow(unused_imports)]
+use crate::detmath::DetMath;
 
 #[cfg(not(feature = "std"))]
 #[allow(unused_imports)]
@@ -42,7 +44,7 @@ pub(crate) fn plastic_flow(
     if det <= 1.0e-6 {
         return false;
     }
-    let s_p = s_p * (1.0 / det.powf(1.0 / DIM as Real));
+    let s_p = s_p * (1.0 / det.d_powf(1.0 / DIM as Real));
     let total = s_p * cell.plastic_stretch;
     let deviation = total - Matrix::IDENTITY;
     let deviation_norm = frobenius_norm(&deviation);
@@ -55,7 +57,7 @@ pub(crate) fn plastic_flow(
     if total_det <= 1.0e-6 {
         return false;
     }
-    let total = total * (1.0 / total_det.powf(1.0 / DIM as Real));
+    let total = total * (1.0 / total_det.d_powf(1.0 / DIM as Real));
     // The new rest edge matrix `P' Dm₀` and its signed volume (`det(Dm) / DIM!`).
     let dm = total * SoftBody::cell_edge_matrix(*rest0);
     let factorial = if DIM == 2 { 2.0 } else { 6.0 };
