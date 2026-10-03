@@ -173,8 +173,15 @@ pub(crate) fn handle_user_changes_to_rigid_bodies(
             // NOTE: recompute the mass-properties AFTER dealing with the rigid-body changes
             //       that imply a collider change (in particular, after propagation of the
             //       enabled/disabled status).
-            if changes
-                .intersects(RigidBodyChanges::LOCAL_MASS_PROPERTIES | RigidBodyChanges::COLLIDERS)
+            //       A fixed body's mass-properties are never used, and recomputing them visits
+            //       every attached collider, so adding or removing one collider on a fixed
+            //       body with many would cost as much as all of them. They are recomputed
+            //       when the body stops being fixed instead.
+            if !rb.is_fixed()
+                && (type_changed
+                    || changes.intersects(
+                        RigidBodyChanges::LOCAL_MASS_PROPERTIES | RigidBodyChanges::COLLIDERS,
+                    ))
             {
                 rb.mprops.recompute_mass_properties_from_colliders(
                     colliders,
